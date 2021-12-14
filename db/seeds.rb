@@ -22,7 +22,5 @@ while i < 10
                       overview: movies["results"][i]["overview"],
                       poster_url: "https://image.tmdb.org/t/p/w200/#{movies["results"][i]["poster_path"]}",
                       rating: movies["results"][i]["vote_average"])
-  list = List.create!(name: movies["results"][i]["release_date"])
-  Bookmark.create!(comment: "this is a test for a bookmark", movie_id: movie.id, list_id: list.id)
   i += 1
 end
