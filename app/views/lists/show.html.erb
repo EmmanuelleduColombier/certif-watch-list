@@ -1,11 +1,47 @@
-<div><%= @list.name %></div>
+<h1><%= @list.name %></h1>
 
-<% @list.bookmarks.each do |bookmark| %>
-  <%= bookmark.comment %>
-  <%= link_to "delete this bookmark",
-              bookmark_path(bookmark.id),
-              method: :delete,
-              data: { confirm: "Are you sure?" } %>
+<div class="d-flex flex-wrap justify-content-around">
+  <% @list.bookmarks.each do |bookmark| %>
+      <div class="card">
+        <div>
+          <%= image_tag bookmark.movie.poster_url, class:"card-img-top" %>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= bookmark.movie.title %></h5>
+          <%= bookmark.movie.rating %>
+          <p class="card-text"><%= bookmark.movie.overview %></p>
+          <p><%= bookmark.comment %></p>
+          <%= link_to "delete this bookmark",
+                      bookmark_path(bookmark.id),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" } %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<div class="reviews-part d-flex justify-content-around">
+  <div class="reviews-list">
+    <h2>Reviews</h2>
+    <% @reviews.each do |review| %>
+      <div>
+        <%= review.rating %>
+        <%= review.comment %>
+      </div>
+    <% end %>
+  </div>
+  <div class="review-new">
+    <h2>Add a new review</h2>
+    <%= simple_form_for [@list, @review] do |f| %>
+      <%= f.input :comment %>
+      <%= f.input :rating, collection: (0..5) %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>
+
+<%= simple_form_for [@list, @bookmark] do |f| %>
+  <%= f.input :comment %>
+  <%= f.association :movie %>
+  <%= f.submit %>
 <% end %>
-
-<div><%= link_to "Add new bookmark", new_list_bookmark_path(@list.id) %></div>
