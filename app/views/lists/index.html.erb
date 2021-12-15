@@ -1,6 +1,8 @@
-<% @lists.each do |list| %>
-  <div><%= link_to list.name, list_path(list.id) %></div>
-  <%= cl_image_tag list.photo.key, height: 300, width: 400, crop: :fill %>
-<% end %>
+<div class="container">
+  <% @lists.each do |list| %>
+    <div><%= link_to list.name, list_path(list.id) %></div>
+    <%= cl_image_tag list.photo.key, height: 300, width: 400, crop: :fill %>
+  <% end %>
 
-<%= link_to "Create a list", new_list_path, class:"btn btn-primary" %>
+  <%= link_to "Create a list", new_list_path, class:"btn btn-primary" %>
+</div>
